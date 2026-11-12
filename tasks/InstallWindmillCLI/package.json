@@ -1,0 +1,9 @@
+{
+  "name": "windmill-installwindmillcli",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.js",
+  "dependencies": {
+    "azure-pipelines-task-lib": "5.283.0"
+  }
+}

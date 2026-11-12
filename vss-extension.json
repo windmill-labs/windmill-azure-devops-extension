@@ -1,0 +1,83 @@
+{
+  "manifestVersion": 1,
+  "id": "windmill-cli",
+  "name": "Windmill CLI",
+  "version": "0.1.0",
+  "publisher": "windmill-labs",
+  "public": false,
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "description": "Install the Windmill CLI (wmill) on an agent and sync a repository to a Windmill workspace from Azure Pipelines.",
+  "categories": [
+    "Azure Pipelines"
+  ],
+  "tags": [
+    "windmill",
+    "wmill",
+    "sync",
+    "deployment",
+    "workflows",
+    "scripts",
+    "cli"
+  ],
+  "icons": {
+    "default": "images/extension-icon.png"
+  },
+  "content": {
+    "details": {
+      "path": "overview.md"
+    }
+  },
+  "links": {
+    "getstarted": {
+      "uri": "https://www.windmill.dev/docs/advanced/cli/sync"
+    },
+    "learn": {
+      "uri": "https://www.windmill.dev/docs/advanced/cli"
+    },
+    "support": {
+      "uri": "https://github.com/windmill-labs/windmill-azure-devops-extension/issues"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/windmill-labs/windmill-azure-devops-extension"
+  },
+  "files": [
+    {
+      "path": "tasks/InstallWindmillCLI"
+    },
+    {
+      "path": "tasks/RunWindmillCLI"
+    },
+    {
+      "path": "images/extension-icon.png",
+      "addressable": true
+    }
+  ],
+  "contributions": [
+    {
+      "id": "install-windmill-cli-task",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "tasks/InstallWindmillCLI"
+      }
+    },
+    {
+      "id": "run-windmill-cli-task",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "tasks/RunWindmillCLI"
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "windmill-azure-devops-extension",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Azure Pipelines tasks that install and run the Windmill CLI (wmill).",
+  "scripts": {
+    "install:tasks": "npm install --omit=dev --prefix tasks/InstallWindmillCLI && npm install --omit=dev --prefix tasks/RunWindmillCLI",
+    "test": "node --test test/tasks.test.js",
+    "package": "npm run install:tasks && tfx extension create --manifest-globs vss-extension.json",
+    "icon": "node scripts/build-icon.js",
+    "package:public": "npm run install:tasks && tfx extension create --manifest-globs vss-extension.json --override \"{\\\"public\\\": true}\""
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "2.6.2",
+    "tfx-cli": "0.24.2"
+  },
+  "license": "Apache-2.0"
+}

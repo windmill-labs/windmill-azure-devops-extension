@@ -1,0 +1,35 @@
+# Smoke test for a private (shared) build of this extension, before making it public.
+# Read-only on the Windmill side: it runs `wmill sync pull`, which writes only to the agent's checkout.
+# Needs: pipeline variables WMILL_URL, WMILL_WORKSPACE (a scratch workspace) and the secret WMILL_TOKEN.
+trigger: none
+
+strategy:
+  matrix:
+    linux:
+      imageName: ubuntu-latest
+    windows:
+      imageName: windows-latest
+
+pool:
+  vmImage: $(imageName)
+
+steps:
+  - checkout: self
+
+  - task: UseNode@1
+    inputs:
+      version: 22.x
+
+  - task: InstallWindmillCLI@0
+    inputs:
+      version: latest
+
+  - task: RunWindmillCLI@0
+    inputs:
+      baseUrl: $(WMILL_URL)
+      workspace: $(WMILL_WORKSPACE)
+      token: $(WMILL_TOKEN)
+      command: sync pull
+      arguments: --yes --skip-variables --skip-secrets --skip-resources
+
+  # Pass criteria: both jobs green, and the RunWindmillCLI log shows the token as *** in the [command] line.

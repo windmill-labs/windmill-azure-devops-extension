@@ -1,0 +1,30 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+  "id": "63efbecc-2ac5-43bf-b616-5aaaa5c3e717",
+  "name": "InstallWindmillCLI",
+  "friendlyName": "Install Windmill CLI",
+  "description": "Installs the Windmill CLI (wmill) from the windmill-cli npm package and puts it on the PATH of the following steps.",
+  "helpMarkDown": "Runs `npm install windmill-cli` into a private folder under the agent temp directory, then adds its bin folder to PATH. Requires Node.js 20 or later with npm on the agent. See https://www.windmill.dev/docs/advanced/cli/installation",
+  "category": "Utility",
+  "author": "Windmill Labs",
+  "version": { "Major": 0, "Minor": 1, "Patch": 0 },
+  "minimumAgentVersion": "2.206.1",
+  "instanceNameFormat": "Install Windmill CLI $(version)",
+  "inputs": [
+    {
+      "name": "version",
+      "type": "string",
+      "label": "windmill-cli version",
+      "defaultValue": "latest",
+      "required": true,
+      "helpMarkDown": "npm version or dist-tag of the windmill-cli package, e.g. `latest` or `1.682.0`. Pin a version that matches your Windmill instance."
+    }
+  ],
+  "execution": {
+    "Node20_1": { "target": "index.js" }
+  },
+  "restrictions": {
+    "commands": { "mode": "restricted" },
+    "settableVariables": { "allowed": ["PATH"] }
+  }
+}

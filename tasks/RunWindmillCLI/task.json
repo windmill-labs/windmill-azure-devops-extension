@@ -1,0 +1,68 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+  "id": "02f8ea47-b1f6-4899-888f-8d08f939db1e",
+  "name": "RunWindmillCLI",
+  "friendlyName": "Run Windmill CLI command",
+  "description": "Runs a wmill command against a Windmill workspace. By default it syncs the repository to the workspace with wmill sync push.",
+  "helpMarkDown": "Runs `wmill <command> <arguments> --workspace <workspace> --token <token> --base-url <url>`. The wmill CLI must already be on PATH (use the Install Windmill CLI task). See https://www.windmill.dev/docs/advanced/cli/sync",
+  "category": "Utility",
+  "author": "Windmill Labs",
+  "version": { "Major": 0, "Minor": 1, "Patch": 0 },
+  "minimumAgentVersion": "2.206.1",
+  "instanceNameFormat": "wmill $(command)",
+  "inputs": [
+    {
+      "name": "baseUrl",
+      "type": "string",
+      "label": "Windmill base URL",
+      "defaultValue": "https://app.windmill.dev",
+      "required": true,
+      "helpMarkDown": "Base URL of your Windmill instance, passed as --base-url."
+    },
+    {
+      "name": "workspace",
+      "type": "string",
+      "label": "Workspace ID",
+      "required": true,
+      "helpMarkDown": "Target workspace ID, passed as --workspace."
+    },
+    {
+      "name": "token",
+      "type": "string",
+      "label": "API token",
+      "required": true,
+      "helpMarkDown": "Windmill API token, passed as --token. Store it as a secret pipeline variable and reference it here as `$(WMILL_TOKEN)`. Never type the token in the YAML."
+    },
+    {
+      "name": "command",
+      "type": "string",
+      "label": "wmill command",
+      "defaultValue": "sync push",
+      "required": true,
+      "helpMarkDown": "The wmill subcommand, without the leading `wmill`, e.g. `sync push` or `sync pull`."
+    },
+    {
+      "name": "arguments",
+      "type": "string",
+      "label": "Arguments",
+      "defaultValue": "--yes --skip-variables --skip-secrets --skip-resources",
+      "required": false,
+      "helpMarkDown": "Extra arguments. The default is the flag set used by the Windmill git sync pipeline examples. `sync push` needs `--yes` because the pipeline cannot answer prompts."
+    },
+    {
+      "name": "workingDirectory",
+      "type": "filePath",
+      "label": "Working directory",
+      "defaultValue": "$(System.DefaultWorkingDirectory)",
+      "required": false,
+      "helpMarkDown": "Folder that holds wmill.yaml and the synced files (the repository root, after checkout)."
+    }
+  ],
+  "execution": {
+    "Node20_1": { "target": "index.js" }
+  },
+  "restrictions": {
+    "commands": { "mode": "restricted" },
+    "settableVariables": { "allowed": [] }
+  }
+}
